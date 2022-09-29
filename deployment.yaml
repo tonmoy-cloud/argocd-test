@@ -4,7 +4,7 @@ metadata:
   name: auth-pod-v2
   namespace: web-apps-v1
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: auth-pod-v2
