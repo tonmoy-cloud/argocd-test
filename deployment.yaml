@@ -17,7 +17,7 @@ spec:
         - name: harbour-registry-secret-apps
       containers:
         - name: auth-pod
-          image: 10.210.32.130/shared-services/web-apps-v1:auth-service-1.0
+          image: 10.210.32.130/shared-services/auth-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: app.db.name
