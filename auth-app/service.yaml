@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: multiple
+  #name: content-svc
+  name: auth-pod-v2
+spec:
+  selector:
+    app: auth-pod-v2
+  ports:
+    - port: 8080
+      name: port-8080
+      protocol: TCP
+  type: NodePort
+

@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-pod-v2
+  namespace: multiple
+data:
+  management.endpoints.web.exposure.include: health,metrics,httptrace,prometheus
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-pod-v2
+  namespace: multiple
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth-pod-v2
+  template:
+    metadata:
+      labels:
+        app: auth-pod-v2
+    spec:
+      imagePullSecrets:
+        - name: harbour-registry-secret-apps
+      containers:
+        - name: auth-pod-v2
+          image: 10.210.32.130/shared-services/auth-service:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: app.db.name
+              value: authDB
+            - name: app.db.host
+              value: auth-db-svc
+            - name: app.db.port
+              value: "3307"
+            - name: app.db.username
+              value: root
+            - name: app.db.password
+              valueFrom:
+                secretKeyRef:
+                  name: web-apps-secret
+                  key: ROOT_PASSWORD_AUTH
+            - name: app.god.user.username
+              value: my.app.domain@app.com
+            - name: app.god.user.password
+              value: "AdMiN!3#1$#"
+            - name: app.god.user.mobile
+              value: "+8801712645571"
+            - name: app.god.user.role
+              value: GOD_ADMIN
+            - name: app.god.user.policy
+              value: god_admin_policy
+            - name: app.god.user.action
+              value: Write
+            - name: app.god.user.resource
+              value: "/api/**"
+            - name: management.endpoints.web.exposure.include
+              valueFrom:
+                configMapKeyRef:
+                  name: common-env
+                  key: management.endpoints.web.exposure.include
+          ports:
+            - containerPort: 8080
+              name: "port-8080"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: multiple
+  #name: content-svc
+  name: auth-pod-v2
+spec:
+  selector:
+    app: auth-pod-v2
+  ports:
+    - port: 8080
+      name: port-8080
+      protocol: TCP
+  type: NodePort
+

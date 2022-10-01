@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-pod-v2
+  namespace: multiple
+data:
+  management.endpoints.web.exposure.include: health,metrics,httptrace,prometheus
