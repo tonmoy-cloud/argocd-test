@@ -5,3 +5,7 @@ metadata:
   namespace: multiple
 data:
   management.endpoints.web.exposure.include: health,metrics,httptrace,prometheus
+  ROOT_PASSWORD_AUTH: cm9vdEAxMjM=
+  ROOT_PASSWORD_NOTIFY: cm9vdEAxMjM=
+  ROOT_PASSWORD_MONGO: ZXhhbXBsZQ==
+  ADMIN_PASSWORD_ACTIVEMQ: YWRtaW4=
