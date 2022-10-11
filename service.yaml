@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   #name: auth-svc
-  namespace: web-apps-v1
-  name: authentication-app
+  namespace: multiple
+  name: auth-pod-v2
 spec:
   selector:
     app: auth-pod-v2
