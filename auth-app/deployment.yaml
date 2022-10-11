@@ -50,7 +50,7 @@ spec:
             - name: management.endpoints.web.exposure.include
               valueFrom:
                 configMapKeyRef:
-                  name: common-env
+                  name: auth-pod-v2
                   key: management.endpoints.web.exposure.include
           ports:
             - containerPort: 8080
